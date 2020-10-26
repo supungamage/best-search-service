@@ -28,8 +28,7 @@ import lombok.experimental.SuperBuilder;
 public class OrganizationType extends Auditable<String> {
 	
 	@Id
-	@GeneratedValue(generator = "OrganizationType_id_seq", strategy = GenerationType.AUTO)
-	@SequenceGenerator(name = "OrganizationType_id_seq", sequenceName = "OrganizationType_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	private String type;
