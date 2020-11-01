@@ -45,5 +45,10 @@ public class OrganizationTypeController {
 	public ResponseEntity<OrganizationTypeOutputDTO> updateOrganizationTypeById(@PathVariable("id") long id, 
 			@RequestBody OrganizationTypeInputDTO organizationTypeInputDTO) {
 		return ResponseEntity.ok(this.organizationTypeService.updateOrganizationType(id, organizationTypeInputDTO));
-	} 
+	}
+
+	@GetMapping("/hello")
+	public String sayHello(){
+		return "Hello...";
+	}
 }
