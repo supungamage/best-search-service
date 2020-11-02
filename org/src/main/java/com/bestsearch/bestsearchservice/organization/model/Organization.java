@@ -7,9 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.bestsearch.bestsearchservice.common.audit.Auditable;
+import com.bestsearch.bestsearchservice.organization.dto.OrganizationOutputDTO;
+import com.bestsearch.bestsearchservice.organization.dto.OrganizationTypeOutputDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Builder;
@@ -26,7 +29,8 @@ import lombok.experimental.SuperBuilder;
 public class Organization extends Auditable<String> { 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="org_seq")
+    @SequenceGenerator(name = "org_seq", sequenceName = "org_seq" ,allocationSize = 1)
 	private long id;
 	
 	@NonNull
@@ -49,4 +53,12 @@ public class Organization extends Auditable<String> {
 
 	@Builder.Default
 	private boolean isActive = true;
+
+	@JsonIgnore
+	public OrganizationOutputDTO viewAsOrganizationOutputDTO() {
+		return OrganizationOutputDTO.builder().id(id).name(name).city(city).district(district)
+				.province(province).isActive(isActive).latitude(latitude).longitude(longitude)
+				.type(organizationType.viewAsOrganizationTypeOutputDTO())
+				.build();
+	}
 }

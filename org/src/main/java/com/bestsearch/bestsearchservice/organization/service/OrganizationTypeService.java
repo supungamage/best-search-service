@@ -14,5 +14,4 @@ public interface OrganizationTypeService {
 	OrganizationTypeOutputDTO getOrganizationTypeById(long id);
 	
 	OrganizationTypeOutputDTO updateOrganizationType(long id, OrganizationTypeInputDTO organizationTypeInputDTO);
-
 }

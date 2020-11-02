@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrganizationTypeInputDTO {
+	private Long id;
 	private String type;
 }

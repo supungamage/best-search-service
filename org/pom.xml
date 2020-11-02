@@ -6,7 +6,7 @@
     <artifactId>bestsearchservice</artifactId>
     <groupId>com.bestsearch</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath/>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -14,11 +14,11 @@
   <packaging>jar</packaging>
 
   <dependencies>
-    <dependency>
+    <!--dependency>
       <groupId>com.bestsearch</groupId>
       <artifactId>auth</artifactId>
       <version>0.0.1</version>
-    </dependency>
+    </dependency -->
   </dependencies>
 
 
