@@ -6,7 +6,9 @@
   <packaging>pom</packaging>
   <modules>
     <module>auth</module>
-		<module>org</module>
+		<module>searchService</module>
+		<module>organizations</module>
+		<module>share</module>
 	</modules>
   <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -76,6 +78,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.bestSearch.SearchServiceApp</mainClass>
+				</configuration>
+
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
