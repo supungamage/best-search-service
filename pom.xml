@@ -7,9 +7,10 @@
   <modules>
     <module>auth</module>
 		<module>searchService</module>
-		<module>organizations</module>
+		<module>organization</module>
+	  <module>order</module>
 		<module>share</module>
-	</modules>
+  </modules>
   <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
