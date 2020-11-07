@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -25,14 +26,17 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public class OrganizationType extends Auditable<String> {
+public class OrganizationType extends Auditable<String> { 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="org_type_seq")
+    @SequenceGenerator(name = "org_type_seq", sequenceName = "org_type_seq" ,allocationSize = 1)
 	private long id;
 	
 	private String type;
-	private boolean isActive;
+
+	@Builder.Default
+	private boolean isActive = true;
 	
 	@OneToMany(mappedBy = "organizationType", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Organization> organizations;
