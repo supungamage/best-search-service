@@ -1,6 +1,6 @@
 package com.bestsearch.bestsearchservice.order.model.enums;
 
-public enum OrderStatus {
+public enum Status {
     INITIAL,
     PROCESSING,
     PENDING

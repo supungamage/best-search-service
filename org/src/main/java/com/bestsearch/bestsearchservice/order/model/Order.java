@@ -2,11 +2,9 @@ package com.bestsearch.bestsearchservice.order.model;
 
 import com.bestsearch.bestsearchservice.common.audit.Auditable;
 import com.bestsearch.bestsearchservice.order.dto.OrderOutputDTO;
-import com.bestsearch.bestsearchservice.order.model.enums.OrderStatus;
+import com.bestsearch.bestsearchservice.order.model.enums.Status;
 import com.bestsearch.bestsearchservice.order.model.enums.OrderType;
-import com.bestsearch.bestsearchservice.organization.dto.OrganizationOutputDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @SuperBuilder
 @NoArgsConstructor
@@ -27,8 +25,13 @@ public class Order extends Auditable<String> {
 
     private String orderRef;
     private long userId;
+
+    @Enumerated(EnumType.ORDINAL)
     private OrderType orderType;
-    private OrderStatus orderStatus;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
+
     private long organizationTypeId;
 
     @NonNull
@@ -42,7 +45,7 @@ public class Order extends Auditable<String> {
     @JsonIgnore
     public OrderOutputDTO viewAsOrderOutputDTO() {
         return OrderOutputDTO.builder().id(id).orderRef(orderRef).userId(userId).orderType(orderType)
-                .orderStatus(orderStatus).latitude(latitude).longitude(longitude)
+                .status(status).latitude(latitude).longitude(longitude)
                 .organizationTypeId(organizationTypeId)
                 .organization(null)
                 .build();

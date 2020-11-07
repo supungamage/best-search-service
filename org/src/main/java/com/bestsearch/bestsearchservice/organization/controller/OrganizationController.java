@@ -22,8 +22,8 @@ public class OrganizationController {
 		this.organizationService = organizationService;
 	}
 
-	@GetMapping("/type/{typeId}")
-	public ResponseEntity<List<OrganizationOutputDTO>> getAllOrganizationsByType(@PathVariable("typeId") long typeId) {
+	@GetMapping("/type")
+	public ResponseEntity<List<OrganizationOutputDTO>> getAllOrganizationsByType(@RequestParam ("typeId") long typeId) {
 		return ResponseEntity.ok(this.organizationService.getOrganizationsByType(typeId));
 	} 
 	

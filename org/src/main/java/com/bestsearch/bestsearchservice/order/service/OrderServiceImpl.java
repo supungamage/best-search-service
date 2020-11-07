@@ -4,9 +4,12 @@ import com.bestsearch.bestsearchservice.common.exception.ResourceNotFoundExcepti
 import com.bestsearch.bestsearchservice.order.dto.OrderInputDTO;
 import com.bestsearch.bestsearchservice.order.dto.OrderOutputDTO;
 import com.bestsearch.bestsearchservice.order.model.Order;
-import com.bestsearch.bestsearchservice.order.model.enums.OrderStatus;
+import com.bestsearch.bestsearchservice.order.model.enums.Status;
 import com.bestsearch.bestsearchservice.order.repository.OrderRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -22,8 +25,8 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(Order.builder()
                 .latitude(orderInputDTO.getLatitude())
                 .longitude(orderInputDTO.getLongitude())
-                .orderRef("")
-                .orderStatus(orderInputDTO.getOrderStatus())
+                .orderRef("AA")
+                .status(orderInputDTO.getStatus())
                 .orderType(orderInputDTO.getOrderType())
                 .organizationId(orderInputDTO.getOrganizationId())
                 .organizationTypeId(orderInputDTO.getOrganizationTypeId())
@@ -46,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void changeOrderStatus(long id, OrderStatus toStatus) {
+    public void changeOrderStatus(long id, Status toStatus) {
         orderRepository.updateOrderStatus(id, toStatus);
     }
 
@@ -57,11 +60,17 @@ public class OrderServiceImpl implements OrderService {
                 .latitude(orderInputDTO.getLatitude())
                 .longitude(orderInputDTO.getLongitude())
                 .orderRef("")
-                .orderStatus(orderInputDTO.getOrderStatus())
+                .status(orderInputDTO.getStatus())
                 .orderType(orderInputDTO.getOrderType())
                 .organizationId(orderInputDTO.getOrganizationId())
                 .organizationTypeId(orderInputDTO.getOrganizationTypeId())
                 .userId(orderInputDTO.getUserId())
                 .build()).viewAsOrderOutputDTO();
+    }
+
+    @Override
+    public List<OrderOutputDTO> getOrders() {
+        return orderRepository.findAll().stream()
+                .map(Order::viewAsOrderOutputDTO).collect(Collectors.toList());
     }
 }
