@@ -1,37 +1,59 @@
 package com.bestSearch.order.service;
 
+import com.bestSearch.order.utils.IdentifierGenerator;
 import com.bestSearch.share.exception.ResourceNotFoundException;
 import com.bestSearch.order.dto.OrderInputDTO;
 import com.bestSearch.order.dto.OrderOutputDTO;
 import com.bestSearch.order.model.Order;
 import com.bestSearch.order.model.enums.Status;
 import com.bestSearch.order.repository.OrderRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private static final String YEAR_MONTH_KEY = "YEARMONTH";
+    private static final String ORDERID = "ORDID";
+    private static final String YEAR_MONTH_DATE_PATTERN = "ddMMyy";
+    private final String orderRefPattern;
+
     private final OrderRepository orderRepository;
 
-    public OrderServiceImpl(final OrderRepository orderRepository) {
+
+
+    public OrderServiceImpl(final OrderRepository orderRepository, final @Value("${order.ref.pattern}") String orderRefPattern) {
         this.orderRepository = orderRepository;
+        this.orderRefPattern = orderRefPattern;
     }
 
     @Override
     public OrderOutputDTO saveOrder(OrderInputDTO orderInputDTO) {
-        return orderRepository.save(Order.builder()
+        long id = orderRepository.getNextId();
+        String orderRef = IdentifierGenerator.generateIdentifier(
+                Map.of(ORDERID, id, YEAR_MONTH_KEY,
+                        LocalDate.now().format(DateTimeFormatter.ofPattern(YEAR_MONTH_DATE_PATTERN))),
+                orderRefPattern);
+
+        Order toBeSaved = Order.builder()
+                .id(id)
                 .latitude(orderInputDTO.getLatitude())
                 .longitude(orderInputDTO.getLongitude())
-                .orderRef("AA")
+                .orderRef(orderRef)
                 .status(orderInputDTO.getStatus())
                 .orderType(orderInputDTO.getOrderType())
                 .organizationId(orderInputDTO.getOrganizationId())
                 .organizationTypeId(orderInputDTO.getOrganizationTypeId())
                 .userId(orderInputDTO.getUserId())
-                .build()).viewAsOrderOutputDTO();
+                .build();
+
+        return orderRepository.save(toBeSaved).viewAsOrderOutputDTO();
     }
 
     @Override

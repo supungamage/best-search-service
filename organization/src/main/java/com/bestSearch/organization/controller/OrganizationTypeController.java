@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/v1/organization-type")
+@RequestMapping("/api/v1/organization-types")
 public class OrganizationTypeController { 
 	
 	private final OrganizationTypeService organizationTypeService;

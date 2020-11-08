@@ -19,12 +19,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderOutputDTO> addOrder(OrderInputDTO orderInputDTO) {
+    public ResponseEntity<OrderOutputDTO> addOrder(@RequestBody OrderInputDTO orderInputDTO) {
         return ResponseEntity.ok(this.orderService.saveOrder(orderInputDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderOutputDTO> updateOrder(@PathVariable("id") long id, OrderInputDTO orderInputDTO) {
+    public ResponseEntity<OrderOutputDTO> updateOrder(@PathVariable("id") long id, @RequestBody OrderInputDTO orderInputDTO) {
         return ResponseEntity.ok(this.orderService.updateOrder(id, orderInputDTO));
     }
 
@@ -38,8 +38,8 @@ public class OrderController {
         return ResponseEntity.ok(this.orderService.getOrderById(id));
     }
 
-    @GetMapping("/{ref}")
-    public ResponseEntity<OrderOutputDTO> getOrderByRef(@PathVariable String orderRef, @RequestParam long organizationTypeId) {
+    @GetMapping("/byRef")
+    public ResponseEntity<OrderOutputDTO> getOrderByRef(@RequestParam String orderRef, @RequestParam long organizationTypeId) {
         return ResponseEntity.ok(this.orderService.getOrderByRef(orderRef, organizationTypeId));
     }
 }

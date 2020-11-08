@@ -17,12 +17,12 @@ public class Swagger2Config {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
-                .apis(RequestHandlerSelectors.basePackage("com.bestsearch.bestsearchservice"))
+                .apis(RequestHandlerSelectors.basePackage("com.bestSearch"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(apiEndPointsInfo());
     }
 
     private ApiInfo apiEndPointsInfo() {
-        return new ApiInfoBuilder().title("bestsearch API").version("1.0.0").build();
+        return new ApiInfoBuilder().title("bestSearch API").version("1.0.0").build();
     }
 }
