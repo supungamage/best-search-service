@@ -1,5 +1,6 @@
 package com.bestSearch.order.service;
 
+import com.bestSearch.order.dto.OrderCreateDTO;
 import com.bestSearch.order.dto.OrderInputDTO;
 import com.bestSearch.order.dto.OrderOutputDTO;
 import com.bestSearch.order.model.enums.Status;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public interface OrderService {
 
-    OrderOutputDTO saveOrder(OrderInputDTO orderInputDTO);
+    OrderOutputDTO saveOrder(OrderCreateDTO orderCreateDTO);
     OrderOutputDTO getOrderById(long id);
     OrderOutputDTO getOrderByRef(String orderRef, long organizationTypeId);
     void changeOrderStatus(long id, Status toStatus);

@@ -44,8 +44,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public List<OrganizationOutputDTO> getOrganizationsByType(long organizationTypeId) {
-        return organizationRepository.findByOrganizationType(organizationTypeId)
+    public List<OrganizationOutputDTO> getActiveOrganizationsByType(long organizationTypeId) {
+        return organizationRepository.findActiveOrganizationByType(organizationTypeId, true)
                 .orElseThrow(() -> new ResourceNotFoundException("No organization available for given type"))
                 .stream()
                 .map(Organization::viewAsOrganizationOutputDTO)

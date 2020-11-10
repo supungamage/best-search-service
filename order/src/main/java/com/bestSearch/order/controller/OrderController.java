@@ -1,5 +1,6 @@
 package com.bestSearch.order.controller;
 
+import com.bestSearch.order.dto.OrderCreateDTO;
 import com.bestSearch.order.dto.OrderInputDTO;
 import com.bestSearch.order.dto.OrderOutputDTO;
 import com.bestSearch.order.service.OrderService;
@@ -21,8 +22,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderOutputDTO> addOrder(@RequestBody OrderInputDTO orderInputDTO) {
-        return ResponseEntity.ok(this.orderService.saveOrder(orderInputDTO));
+    public ResponseEntity<OrderOutputDTO> addOrder(@RequestBody OrderCreateDTO orderCreateDTO) {
+        return ResponseEntity.ok(this.orderService.saveOrder(orderCreateDTO));
     }
 
     @PutMapping("/{id}")

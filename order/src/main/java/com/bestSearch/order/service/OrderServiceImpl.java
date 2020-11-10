@@ -1,5 +1,6 @@
 package com.bestSearch.order.service;
 
+import com.bestSearch.order.dto.OrderCreateDTO;
 import com.bestSearch.order.utils.IdentifierGenerator;
 import com.bestSearch.share.exception.ResourceNotFoundException;
 import com.bestSearch.order.dto.OrderInputDTO;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderOutputDTO saveOrder(OrderInputDTO orderInputDTO) {
+    public OrderOutputDTO saveOrder(OrderCreateDTO orderCreateDTO) {
         long id = orderRepository.getNextId();
         String orderRef = IdentifierGenerator.generateIdentifier(
                 Map.of(ORDERID, id, YEAR_MONTH_KEY,
@@ -43,14 +45,15 @@ public class OrderServiceImpl implements OrderService {
 
         Order toBeSaved = Order.builder()
                 .id(id)
-                .latitude(orderInputDTO.getLatitude())
-                .longitude(orderInputDTO.getLongitude())
+                .latitude(orderCreateDTO.getLatitude())
+                .longitude(orderCreateDTO.getLongitude())
                 .orderRef(orderRef)
-                .status(orderInputDTO.getStatus())
-                .orderType(orderInputDTO.getOrderType())
-                .organizationId(orderInputDTO.getOrganizationId())
-                .organizationTypeId(orderInputDTO.getOrganizationTypeId())
-                .userId(orderInputDTO.getUserId())
+                .status(Status.INITIAL)
+                .orderType(orderCreateDTO.getOrderType())
+                .organizationId(orderCreateDTO.getOrganizationId())
+                .organizationTypeId(orderCreateDTO.getOrganizationTypeId())
+                .userId(orderCreateDTO.getUserId())
+                .orderedAt(LocalDateTime.now())
                 .build();
 
         return orderRepository.save(toBeSaved).viewAsOrderOutputDTO();

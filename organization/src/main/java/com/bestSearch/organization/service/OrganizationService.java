@@ -9,7 +9,7 @@ public interface OrganizationService {
 
     OrganizationOutputDTO addOrganization(OrganizationInputDTO organizationInputDTO);
 
-    List<OrganizationOutputDTO> getOrganizationsByType(long organizationTypeId);
+    List<OrganizationOutputDTO> getActiveOrganizationsByType(long organizationTypeId);
 
     OrganizationOutputDTO getOrganizationById(long id);
 

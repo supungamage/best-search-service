@@ -37,13 +37,13 @@ public class OrganizationType extends Auditable<String> {
 	private String type;
 
 	@Builder.Default
-	private boolean isActive = true;
+	private boolean active = true;
 	
 	@OneToMany(mappedBy = "organizationType", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Organization> organizations;
 	
 	@JsonIgnore
 	public OrganizationTypeOutputDTO viewAsOrganizationTypeOutputDTO() {
-		return OrganizationTypeOutputDTO.builder().id(id).type(type).isActive(isActive).build();
+		return OrganizationTypeOutputDTO.builder().id(id).type(type).active(active).build();
 	}
 }

@@ -52,13 +52,15 @@ public class Organization extends Auditable<String> {
 	private Double latitude;
 
 	@Builder.Default
-	private boolean isActive = true;
+	private boolean active = true;
+
+	private String address;
 
 	@JsonIgnore
 	public OrganizationOutputDTO viewAsOrganizationOutputDTO() {
 		return OrganizationOutputDTO.builder().id(id).name(name).city(city).district(district)
-				.province(province).isActive(isActive).latitude(latitude).longitude(longitude)
-				.type(organizationType.viewAsOrganizationTypeOutputDTO())
+				.province(province).active(active).latitude(latitude).longitude(longitude)
+				.address(address).type(organizationType.viewAsOrganizationTypeOutputDTO())
 				.build();
 	}
 }

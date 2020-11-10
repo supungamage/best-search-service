@@ -14,5 +14,5 @@ import lombok.experimental.SuperBuilder;
 public class OrganizationTypeOutputDTO { 
 	private long id;
 	private String type;
-	private boolean isActive;
+	private boolean active;
 }
