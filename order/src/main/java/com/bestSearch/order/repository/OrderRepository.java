@@ -5,7 +5,9 @@ import com.bestSearch.order.model.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -17,4 +19,20 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(value = "SELECT nextval('order_seq')", nativeQuery = true)
     long getNextId();
+
+    @Query(value = "SELECT o FROM Order o " +
+            "WHERE o.organizationTypeId = :organizationTypeId " +
+            "and o.userId = :userId " +
+            "and o.status <> :status " +
+            "ORDER BY o.orderedAt")
+    Optional<List<Order>> getCurrentOrders(long organizationTypeId, long userId, Status status);
+
+    @Query(value = "SELECT o FROM Order o " +
+            "WHERE o.organizationTypeId = :organizationTypeId " +
+            "and o.userId = :userId " +
+            "and o.status = :status " +
+            "ORDER BY o.orderedAt")
+    Optional<List<Order>> getPastOrders(long organizationTypeId, long userId, Status status);
+
+
 }

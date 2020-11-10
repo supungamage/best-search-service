@@ -95,4 +95,20 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll().stream()
                 .map(Order::viewAsOrderOutputDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public Map<LocalDate, List<OrderOutputDTO>> getCurrentOrders(long orgTypeId, long userId) {
+        return orderRepository.getCurrentOrders(orgTypeId, userId, Status.CLOSED)
+                .orElseThrow(() -> new ResourceNotFoundException("No data found"))
+                .stream().map(Order::viewAsOrderOutputDTO)
+                .collect(Collectors.groupingBy(OrderOutputDTO::getOrderDate));
+    }
+
+    @Override
+    public Map<LocalDate, List<OrderOutputDTO>> getPastOrders(long orgTypeId, long userId) {
+        return orderRepository.getPastOrders(orgTypeId, userId, Status.CLOSED)
+                .orElseThrow(() -> new ResourceNotFoundException("No data found"))
+                .stream().map(Order::viewAsOrderOutputDTO)
+                .collect(Collectors.groupingBy(OrderOutputDTO::getOrderDate));
+    }
 }

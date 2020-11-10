@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ApiError {
 	private int status;
 	private String message;
+	private boolean success = false;
 
 	ApiError() {
 	}

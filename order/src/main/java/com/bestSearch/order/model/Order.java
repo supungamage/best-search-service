@@ -11,6 +11,9 @@ import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "orders")
@@ -42,12 +45,18 @@ public class Order extends Auditable<String> {
 
     private long organizationId;
 
+    private LocalDateTime orderedAt;
+
     @JsonIgnore
     public OrderOutputDTO viewAsOrderOutputDTO() {
         return OrderOutputDTO.builder().id(id).orderRef(orderRef).userId(userId).orderType(orderType)
                 .status(status).latitude(latitude).longitude(longitude)
                 .organizationTypeId(organizationTypeId)
                 .organizationId(organizationId)
+                .orderedAt(orderedAt)
+                .period(ChronoUnit.HOURS.between(orderedAt, LocalDateTime.now()) < 24
+                        ? ChronoUnit.HOURS.between(orderedAt, LocalDateTime.now())
+                        : -1)
                 .build();
     }
 }

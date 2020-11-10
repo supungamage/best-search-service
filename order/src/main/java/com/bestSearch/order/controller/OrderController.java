@@ -6,7 +6,9 @@ import com.bestSearch.order.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -24,7 +26,9 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OrderOutputDTO> updateOrder(@PathVariable("id") long id, @RequestBody OrderInputDTO orderInputDTO) {
+    public ResponseEntity<OrderOutputDTO> updateOrder(
+            @PathVariable("id") long id,
+            @RequestBody OrderInputDTO orderInputDTO) {
         return ResponseEntity.ok(this.orderService.updateOrder(id, orderInputDTO));
     }
 
@@ -39,7 +43,24 @@ public class OrderController {
     }
 
     @GetMapping("/byRef")
-    public ResponseEntity<OrderOutputDTO> getOrderByRef(@RequestParam String orderRef, @RequestParam long organizationTypeId) {
+    public ResponseEntity<OrderOutputDTO> getOrderByRef(
+            @RequestParam String orderRef,
+            @RequestParam long organizationTypeId) {
         return ResponseEntity.ok(this.orderService.getOrderByRef(orderRef, organizationTypeId));
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<Map<LocalDate, List<OrderOutputDTO>>> getCurrentOrders(
+            @RequestParam long orgTypeId,
+            @RequestParam long userId) {
+        return ResponseEntity.ok(this.orderService.getCurrentOrders(orgTypeId, userId));
+    }
+
+    @GetMapping("/past")
+    public ResponseEntity<Map<LocalDate, List<OrderOutputDTO>>> getPastOrders(
+            @RequestParam long orgTypeId,
+            @RequestParam long userId) {
+        return ResponseEntity.ok(this.orderService.getPastOrders(orgTypeId, userId));
+    }
+
 }

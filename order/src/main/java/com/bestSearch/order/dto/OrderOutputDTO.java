@@ -2,11 +2,15 @@ package com.bestSearch.order.dto;
 
 import com.bestSearch.order.model.enums.OrderType;
 import com.bestSearch.order.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,4 +27,11 @@ public class OrderOutputDTO {
     private Double longitude;
     private Double latitude;
     private long organizationId;
+    private LocalDateTime orderedAt;
+    private long period;
+
+    @JsonIgnore
+    public LocalDate getOrderDate() {
+        return orderedAt.toLocalDate();
+    }
 }
