@@ -1,6 +1,7 @@
 package com.bestSearch.order.service;
 
 import com.bestSearch.order.dto.OrderCreateDTO;
+import com.bestSearch.order.producer.SQSProducer;
 import com.bestSearch.order.utils.IdentifierGenerator;
 import com.bestSearch.share.exception.ResourceNotFoundException;
 import com.bestSearch.order.dto.OrderInputDTO;
@@ -28,11 +29,18 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
 
+    private final SQSProducer sqsProducer;
 
+    private final String orderSqsName;
 
-    public OrderServiceImpl(final OrderRepository orderRepository, final @Value("${order.ref.pattern}") String orderRefPattern) {
+    public OrderServiceImpl(final OrderRepository orderRepository,
+                            final SQSProducer sqsProducer,
+                            final @Value("${order.ref.pattern}") String orderRefPattern,
+                            final @Value("${aws.sqs.order}") String orderSqsName) {
         this.orderRepository = orderRepository;
         this.orderRefPattern = orderRefPattern;
+        this.sqsProducer = sqsProducer;
+        this.orderSqsName = orderSqsName;
     }
 
     @Override
@@ -56,7 +64,10 @@ public class OrderServiceImpl implements OrderService {
                 .orderedAt(LocalDateTime.now())
                 .build();
 
-        return orderRepository.save(toBeSaved).viewAsOrderOutputDTO();
+        OrderOutputDTO savedOeder = orderRepository.save(toBeSaved).viewAsOrderOutputDTO();
+        pushToSqs(savedOeder);
+
+        return savedOeder;
     }
 
     @Override
@@ -113,5 +124,9 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("No data found"))
                 .stream().map(Order::viewAsOrderOutputDTO)
                 .collect(Collectors.groupingBy(OrderOutputDTO::getOrderDate));
+    }
+
+    private void pushToSqs(OrderOutputDTO data) {
+        sqsProducer.produce(orderSqsName, data);
     }
 }

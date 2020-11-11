@@ -211,12 +211,12 @@ COPY public.order_type (id, name, description, organization_type, is_active, cre
 --
 
 COPY public.orders (id, order_ref, user_id, order_type, organization_type_id, longitude, latitude, created_at, modified_at, created_by, modified_by, status, organization_id, ordered_at) FROM stdin;
-1	A	1	1	1	100	100	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
-11	AA	1	1	1	100	100	2020-11-06 00:00:00	2020-11-06 00:00:00	System	System	1	1	2020-11-09 00:00:00
-12	AA	1	0	1	1	1	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
-14	AA	1	0	1	1	1	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-08 00:00:00
-15	ORD1507112020	1	0	1	100	100	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
-16	ORD16081120	1	0	1	100	100	2020-11-08 00:00:00	2020-11-08 00:00:00	System	System	1	1	2020-11-07 00:00:00
+1	A	1	1	3	100	100	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
+11	AA	1	1	3	100	100	2020-11-06 00:00:00	2020-11-06 00:00:00	System	System	1	1	2020-11-09 00:00:00
+12	AA	1	0	3	1	1	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
+14	AA	1	0	3	1	1	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-08 00:00:00
+15	ORD1507112020	1	0	3	100	100	2020-11-07 00:00:00	2020-11-07 00:00:00	System	System	1	1	2020-11-09 00:00:00
+16	ORD16081120	1	0	3	100	100	2020-11-08 00:00:00	2020-11-08 00:00:00	System	System	1	1	2020-11-07 00:00:00
 19	ORD19091120	1	0	3	200	200	2020-11-09 00:00:00	2020-11-09 00:00:00	System	System	0	0	2020-11-09 00:00:00
 17	ORD17091120	1	0	3	200	200	2020-11-09 00:00:00	2020-11-09 00:00:00	System	System	0	0	2020-11-09 00:00:00
 18	ORD18091120	1	0	3	200	200	2020-11-09 00:00:00	2020-11-09 00:00:00	System	System	0	0	2020-11-09 00:00:00
@@ -231,7 +231,7 @@ COPY public.orders (id, order_ref, user_id, order_type, organization_type_id, lo
 --
 
 COPY public.organization (id, name, organization_type, province, district, city, longitude, latitude, created_at, modified_at, created_by, modified_by, address, active) FROM stdin;
-1	string	3	string	string	string	0	0	2020-11-02 00:00:00	2020-11-02 00:00:00	System	System	aaaaaaaaa	t
+1	healthguard	3	western	colombo	nawala	0	0	2020-11-02 00:00:00	2020-11-02 00:00:00	System	System	503,Nawala	t
 \.
 
 
@@ -242,7 +242,7 @@ COPY public.organization (id, name, organization_type, province, district, city,
 --
 
 COPY public.organization_type (type, id, active, created_by, created_at, modified_by, modified_at) FROM stdin;
-string	2	f	System	2020-11-01 00:00:00	System	2020-11-01 00:00:00
+shopping	2	f	System	2020-11-01 00:00:00	System	2020-11-01 00:00:00
 pharmacy	3	t	System	2020-11-02 00:00:00	System	2020-11-02 00:00:00
 \.
 

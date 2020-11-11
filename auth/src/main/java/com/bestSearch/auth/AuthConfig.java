@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
             .antMatchers("/webjars/**")
             .antMatchers("/api/v1/orders/**")
             .antMatchers("/api/v1/organizations/**")
+            .antMatchers("/api/v1/organization-types/**")
             .antMatchers("/actuator/**");
   }
 
